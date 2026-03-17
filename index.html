@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký Hệ Thống</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 40px; text-align: center; background: #f4f4f4;}
+        form { max-width: 400px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: 15px; }
+        input { padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px; }
+        button { padding: 12px; font-size: 16px; cursor: pointer; background: #0078d4; color: white; border: none; border-radius: 4px; }
+        button:disabled { background: #a6a6a6; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+    <h2>Form Đăng Ký</h2>
+    <form id="regForm">
+        <input type="text" name="hoTen" placeholder="Họ và tên" required>
+        <input type="email" name="email" placeholder="Email" required>
+        
+        <div class="g-recaptcha" data-sitekey="ĐIỀN_SITE_KEY_CỦA_BẠN_VÀO_ĐÂY"></div>
+        
+        <button type="submit" id="submitBtn">Xác nhận đăng ký</button>
+    </form>
+
+    <script>
+        document.getElementById('regForm').addEventListener('submit', function(e) {
+            e.preventDefault(); 
+            
+            if(grecaptcha.getResponse().length === 0) {
+                alert("Vui lòng xác nhận bạn không phải là người máy!");
+                return;
+            }
+
+            var btn = document.getElementById('submitBtn');
+            btn.innerText = "Đang gửi dữ liệu...";
+            btn.disabled = true;
+
+            var formData = new FormData(this);
+            
+            // THAY LINK WEB APP CỦA GOOGLE APPS SCRIPT VÀO ĐÂY
+            var gasUrl = "ĐIỀN_LINK_WEB_APP_URL_CỦA_GAS_VÀO_ĐÂY";
+
+            fetch(gasUrl, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert("Đăng ký thành công!");
+                document.getElementById('regForm').reset();
+                grecaptcha.reset(); 
+                btn.innerText = "Xác nhận đăng ký";
+                btn.disabled = false;
+            })
+            .catch(error => {
+                alert("Đã gửi thông tin! (Lưu ý: Nếu dữ liệu đã vào Sheet, bạn có thể bỏ qua cảnh báo lỗi CORS của trình duyệt)");
+                document.getElementById('regForm').reset();
+                grecaptcha.reset();
+                btn.innerText = "Xác nhận đăng ký";
+                btn.disabled = false;
+            });
+        });
+    </script>
+</body>
+</html>
